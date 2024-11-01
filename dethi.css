@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    margin: 20px;
+}
+
+h2 {
+    color: #0044cc;
+}
+
+.question {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding: 15px;               /* Thêm khoảng đệm cho khung */
+    border: 1px solid #cccccc;   /* Tạo khung viền nhỏ xung quanh mỗi câu hỏi */
+    border-radius: 5px;          /* Bo tròn các góc của khung */
+    background-color: #ffffff;
+    color: black;
+}
+
+@keyframes rainbow {
+    0% { color: red; }
+    20% { color: orange; }
+    40% { color: yellow; }
+    60% { color: green; }
+    80% { color: blue; }
+    100% { color: purple; }
+}
+@keyframes rainbow1 {
+    0% { color: rgb(119, 0, 255); }
+    20% { color: rgb(80, 97, 133); }
+    40% { color: rgb(168, 3, 119); }
+    60% { color: rgb(5, 210, 224); }
+    80% { color: rgb(131, 131, 207); }
+    100% { color: purple; }
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: black; /* Giữ màu đen cho câu trả lời */
+}
+
+.answer-options {
+    margin-left: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0044cc;
+    color: rgb(37, 35, 35);
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #003399;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.title {
+    font-size: larger;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+    font-size: 36px;          /* Chữ lớn hơn */
+    text-align: center;        /* Căn giữa tiêu đề */
+    animation: rainbow1 10s infinite; /* Hiệu ứng nhấp nháy cho tiêu đề */
+}
+.kkk{
+    font-weight:bold;
+    animation: rainbow 5s infinite; /* Hiệu ứng nhấp nháy cho tiêu đề */
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+}
