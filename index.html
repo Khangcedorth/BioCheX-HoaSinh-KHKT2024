@@ -29,7 +29,7 @@
         <img id="righticon" src="iconindex.PNG" alt="Icon Hoá Học">
         <h1 id="first">BioCheX - Hoá Sinh trong đời sống</h1>
         <h2 id="kkk">Trang wed có hỗ trợ cho người khiếm thị, click 1 lần vào màn hình để nghe hướng dẫn chi tiết</h2>
-        <h3 >Nếu không sử dụng chức năng giọng nói, vui lòng tắt tiếng trang wed để nâng cao trải nghiệm sử dụng</h3>
+        <h3 >Nếu không sử dụng chức năng giọng nói, vui lòng tắt tiếng trang web để nâng cao trải nghiệm sử dụng</h3>
         <div class="custom-button">
         <marquee behavior="alternate">
             <marquee style="color:#ffffff; font-weight:bold" width="700px">BIOCHEX - HOÁ SINH TRONG ĐỜI SỐNG</marquee>
@@ -103,11 +103,6 @@
     </div>
     <div>
         <div class="button-container">
-            <a href="dethi.html" class="custom-button">dd</a>
-        </div>
-    </div>
-    <div>
-        <div class="button-container">
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfjGqN0bYpGeIxJMdtde3G76Dd2UdL1pMNpFnckQqhLFsoRrQ/viewform?usp=sf_link" class="custom-button">Khảo sát trải nghiệm người dùng</a>
         </div>
     </div>
@@ -151,7 +146,7 @@
         const transcript = event.results[0][0].transcript.toLowerCase(); // Chuyển giọng nói thành văn bản và viết thường
         console.log(transcript); // Xem kết quả thu âm
 
-        if (transcript.includes('ph trong đất')) {
+        if (transcript.includes('độ ph trong đất')) {
             window.location.href = 'mtruongpH.html'; // Điều hướng tới trang pH trong đất
         }
         if (transcript.includes('chuẩn độ')) {
