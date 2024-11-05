@@ -46,13 +46,13 @@
 
         <!-- Âm thanh khi trang web được tải -->
         <audio id="introAudio">
-            <source src="intro.mp3" type="audio/mpeg">
+            <source src="hd1.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
 
         <!-- Âm thanh khi không nhận được giọng nói hoặc không tìm thấy lệnh tương ứng -->
         <audio id="errorSound">
-            <source src="mcAI.mp3" type="audio/mpeg">
+            <source src="mcAI1.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
 
@@ -84,7 +84,7 @@ document.addEventListener('click', function(event) {
     } else {
         clickTimeout = setTimeout(() => {
             clickTimeout = null; // Đặt lại biến timeout sau 300ms
-        }, 300);
+        }, 500);
     }
 });
 
@@ -159,17 +159,17 @@ document.addEventListener('click', function(event) {
                 window.open(youtubeURL, '_blank'); // Mở video YouTube trong tab mới
                 resultDiv.textContent += ' (Đã mở video thí nghiệm trên YouTube)';
             }
-            else if (command.includes('lớp phân lớp cấu hình electron')) {
+            else if (command.includes('lớp phân lớp')) {
                 const youtubeURL = 'https://www.youtube.com/watch?v=OcqJ769TRt4';
                 window.open(youtubeURL, '_blank'); // Mở video YouTube trong tab mới
                 resultDiv.textContent += ' (Đã mở video thí nghiệm trên YouTube)';
             }
-            else if (command.includes('cấu tạo bảng tuần hoàn hóa học')) {
+            else if (command.includes('tuần hoàn hóa học')) {
                 const youtubeURL = 'https://www.youtube.com/watch?v=wAQ3N_JLHHE';
                 window.open(youtubeURL, '_blank'); // Mở video YouTube trong tab mới
                 resultDiv.textContent += ' (Đã mở video thí nghiệm trên YouTube)';
             }
-            else if (command.includes('xu hướng biến đổi tính chất của đơn chất, biến đổi thành phần và tính chất của hợp chất trong một chu kỳ và một nhóm')) {
+            else if (command.includes('xu hướng biến đổi tính chất ')) {
                 const youtubeURL = 'https://www.youtube.com/watch?v=knUF_ROYOOc';
                 window.open(youtubeURL, '_blank'); // Mở video YouTube trong tab mới
                 resultDiv.textContent += ' (Đã mở video thí nghiệm trên YouTube)';
@@ -179,7 +179,7 @@ document.addEventListener('click', function(event) {
                 window.open(youtubeURL, '_blank'); // Mở video YouTube trong tab mới
                 resultDiv.textContent += ' (Đã mở video thí nghiệm trên YouTube)';
             }
-            else if (command.includes('quy tắc octet')) {
+            else if (command.includes('quy tắc')) {
                 const youtubeURL = 'https://www.youtube.com/watch?v=0__oPyRLzOE';
                 window.open(youtubeURL, '_blank'); // Mở video YouTube trong tab mới
                 resultDiv.textContent += ' (Đã mở video thí nghiệm trên YouTube)';

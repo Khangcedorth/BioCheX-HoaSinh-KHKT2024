@@ -90,6 +90,9 @@
                 } else if (clickCount === 2) {
                     startListening(); // Nhấp 2 lần để bắt đầu nhận diện giọng nói
                 }
+                else if (clickCount === 3) {
+            window.location.href = "index.html"; // Nhấp 3 lần để quay về trang chủ
+        }
                 clickCount = 0; // Đặt lại đếm số lần nhấp chuột
             }, 300); // Thời gian chờ giữa các lần nhấp, có thể điều chỉnh nếu cần
         });
