@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="BioCheX.png" type="image/x-icon">
+    <title>BioCheX - Khám Phá Thế Giới qua Hoá Sinh</title>
+    <link rel="stylesheet" href="btester.css">
+</head>
+<body>
+    <header>
+        <h1>BioCheX - Khám Phá Thế Giới qua Hoá Sinh</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+            <marquee behavior="alternate">
+                <marquee style="color:#ffffff; font-weight:bold" width="700px">I LOVE CHEMISTRY - HOÁ HỌC ĐƯA ĐẾN TƯƠNG LAI</marquee>
+            </marquee>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="quiz">
+            <h2>Câu hỏi</h2>
+            <form id="quiz-form">
+                <!-- Câu hỏi sẽ được hiển thị ở đây -->
+            </form>
+            <button id="next-submit-btn" onclick="submitAnswer()">Nộp bài</button>
+        </section>
+
+        <section id="question-list">
+            <h2>Danh sách câu hỏi</h2>
+            <ul id="question-navigation">
+                <!-- Số câu hỏi sẽ được thêm vào đây -->
+            </ul>
+        </section>
+
+        <section id="results" style="display: none;">
+            <h2>Kết quả</h2>
+            <div id="score"></div>
+            <div id="correct-answers"></div>
+            <div id="incorrect-answers"></div>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkNvC9P6pIqkHU2tDhRbPnV3Y36m7NdjiR5GVopADP9PkCHn7E0Mxs2grIyEZ7R66txHJFlQsEg1cNMsuubQ-h0EBUoUtQJ_nlHLc6MAPOiUeZSuDmPATHgLcFG-w3989IWawhrEwoV7bMrRSMmJQmmvcWs0Gdt7nZ2fQmBBRbdFQO7CTOO4XK9Tj7dA/s940/B%E1%BA%A3n%20sao%20c%E1%BB%A7a%20Ngh%C4%A9%20kh%C3%A1c%20%C4%91i%20(B%C3%A0i%20%C4%91%C4%83ng%20Facebook)%20(16).png" alt="Congratulations Image" id="congratulations-image">
+
+            <button onclick="restartQuiz()">Làm lại</button>
+        </section>
+    </main>
+
+    <footer>
+        <ul>
+            <p>BioCheX - Hoá Sinh trong đời sống. HVT-TNK</p>
+        </ul>
+    </footer>
+    <script>
+        // Dữ liệu về các câu hỏi và đáp án
+        const questions = [
+    {
+        question: "Câu 1: Phát biểu nào sau đây là không đúng về chất dẻo?",
+        answers: [
+            { text: "Tất cả chất dẻo đều được tổng hợp từ phản ứng trùng hợp.", correct: true },
+            { text: "Chất dẻo là những vật liệu polymer có tính chất bị biến dạng khi chịu tác dụng của nhiệt độ hoặc áp lực bên ngoài và vẫn giữ nguyên sự biến dạng đó khi thôi tác dụng.", correct: false },
+            { text: "Thành phần chính của chất dẻo là polymer, ngoài ra người ta còn cho thêm vào chất dẻo những chất phụ gia như chất hoá dẻo, chất độn, chất màu, chất ổn định,…", correct: false },
+            { text: "linoleic acid.", correct: false }
+        ],
+        explanation: "Chất dẻo có thể được tổng hợp từ phản ứng trùng hợp hoặc trùng ngưng."
+    },
+    {
+        question: "Câu 2: Thành phần của chất dẻo chứa",
+        answers: [
+            { text: "polymer.", correct: false },
+            { text: "polymer, chất hóa dẻo và các chất phụ gia khác.", correct: true },
+            { text: "chất hóa dẻo.", correct: false },
+            { text: "các chất phụ gia khác.", correct: false }
+        ],
+        explanation: "Thành phần của chất dẻo chứa polymer, chất hóa dẻo và các chất phụ gia khác."
+    },
+    {
+        question: "Câu 3: Loại nhựa nào sau đây không phải nhựa nhiệt dẻo và không thể tái chế?",
+        answers: [
+            { text: "Nhựa PE.", correct: false },
+            { text: "Nhựa PP.", correct: false },
+            { text: "Nhựa PS.", correct: false },
+            { text: "Nhựa PPF.", correct: true }
+        ],
+        explanation: "PPF là chất nhiệt rắn (không phải nhựa nhiệt dẻo) và không thể tái chế."
+    },
+    {
+        question: "Câu 4: PE là một polymer thông dụng, dùng làm chất dẻo (chất dẻo chứa PE chiếm gần 1/3 tổng lượng chất dẻo được sản xuất hàng năm). Trong đời sống, PE được dùng làm màng bọc thực phẩm, túi nylon, bao gói, chai lọ đựng hoá mỹ phẩm.... PE được điều chế từ monomer nào sau đây?",
+        answers: [
+            { text: "Styrene.", correct: false },
+            { text: "Vinyl chloride.", correct: false },
+            { text: "Propylene.", correct: false },
+            { text: "Ethylene.", correct: true }
+        ],
+        explanation: "PE được điều chế từ monomer là ethylene."
+    },
+    {
+        question: "Câu 5: Chất dẻo nào sau đây chứa chlorine?",
+        answers: [
+            { text: "PE.", correct: false },
+            { text: "PS.", correct: false },
+            { text: "PVC.", correct: true },
+            { text: "PPF.", correct: false }
+        ],
+        explanation: "Chất dẻo PVC (poly(vinyl chloride)) chứa chlorine."
+    },
+    {
+        question: "Câu 6: Polymer nào sau đây trong thành phần hóa học chỉ có hai nguyên tố carbon và hydrogen?",
+        answers: [
+            { text: "Poly(methyl methacrylate).", correct: false },
+            { text: "Poly(vinyl chloride).", correct: false },
+            { text: "Poly(phenol formaldehyde).", correct: false },
+            { text: "Polystyrene.", correct: true }
+        ],
+        explanation: "Polystyrene (-CH2-CH(C6H5)-)n chỉ có hai nguyên tố carbon và hydrogen."
+    },
+    {
+        question: "Câu 7: Polypropylene (PP) là chất dẻo thường được sử dụng để sản xuất các sản phẩm thiết bị y tế, đồ gia dụng, ... Vật liệu được chế tạo từ PP thường có kí hiệu như hình bên, PP được tổng hợp từ monomer nào sau đây?",
+        answers: [
+            { text: "CH2=CH2.", correct: false },
+            { text: "CH3-CH=CH2.", correct: true },
+            { text: "C6H5 và HCHO.", correct: false },
+            { text: "CH2=CH-CN.", correct: false }
+        ],
+        explanation: "PP được tổng hợp từ monomer là CH3-CH=CH2."
+    },
+    {
+        question: "Câu 8: Poly(methyl methacrylate) (PMMA) cho ánh sáng truyền qua trên 90% nên được sử dụng làm thuỷ tinh hữu cơ. Thực hiện phản ứng trùng hợp monomer nào sau đây thu được PMMA?",
+        answers: [
+            { text: "CH2=C(CH3)-COOC2H5.", correct: false },
+            { text: "CH2=C(CH3)-COOCH3.", correct: true },
+            { text: "CH3COOCH=CH2.", correct: false },
+            { text: "CH2=CH-COOC2H5.", correct: false }
+        ],
+        explanation: "Thực hiện phản ứng trùng hợp monomer CH2=C(CH3)-COOCH3 thu được PMMA."
+    },
+    {
+        question: "Câu 9: Chất được dùng nhiều làm màng mỏng, vật liệu cách điện, bình chứa là",
+        answers: [
+            { text: "Cao su thiên nhiên", correct: false },
+            { text: "Poly(vinyl chloride) (PVC)", correct: false },
+            { text: "Nylon-6,6.", correct: false },
+            { text: "Polyethylene (PE).", correct: true }
+        ],
+        explanation: "Chất được dùng nhiều làm màng mỏng, vật liệu cách điện, bình chứa là polyethylene (PE)."
+    },
+    {
+        question: "Câu 10: Cho biết những phát biểu nào sau đây không đúng về tác hại của việc lạm dụng chất dẻo?",
+        answers: [
+            { text: "Khi đốt, rác thải nhựa sẽ ra chất độc, gây ô nhiễm không khí, làm tăng lượng khí gây hiệu ứng nhà kính.", correct: false },
+            { text: "Khi chôn lấp, rác thải nhựa sẽ làm cho đất không giữ được nước, dinh dưỡng, làm chết vi sinh vật có lợi trong đất, gây tác động xấu đến sự sinh trưởng của cây trồng.", correct: false },
+            { text: "Nhựa thải ra sông hồ, đại dương,… gây ô nhiễm nguồn nước, có thể làm chết các sinh vật trong nước, làm mất cân bằng hệ sinh thái.", correct: false },
+            { text: "Quá trình phân hủy nhiều loại rác thải nhựa có thể kéo dài trong khoảng một vài năm, chính vì vậy khi tích tụ quá nhiều rác thải nhựa không gây ảnh hưởng nghiêm trọng đến con người, động vật và môi trường.", correct: true }
+        ],
+        explanation: "Quá trình phân hủy nhiều loại rác thải nhựa có thể kéo dài trong khoảng một vài năm, chính vì vậy khi tích tụ quá nhiều rác thải nhựa gây ảnh hưởng nghiêm trọng đến con người, động vật và môi trường."
+    },
+    {
+        question: "Câu 11: Phát biểu nào sau đây không đúng khi nói về vật liệu composite?",
+        answers: [
+            { text: "Vật liệu composite cốt sợi được dùng phổ biến để sản xuất thân, vỏ máy bay, tàu thuyền, thân xe đua, khung xe đạp, bồn chứa, ống dẫn,...", correct: false },
+            { text: "Vỏ tàu thuyền, vỏ ô tô, … không thể làm từ vật liệu composite.", correct: true },
+            { text: "Vật liệu composite cốt hạt được dùng để sản xuất gỗ nhựa, bê tông nhựa, gốm chất lượng cao,...", correct: false },
+            { text: "So với các polymer ban đầu, vật liệu composite có nhiều tính chất quý như nhẹ hơn, cách nhiệt và cách điện tốt hơn, độ bền cao hơn,...", correct: false }
+        ],
+        explanation: "Vỏ tàu thuyền, vỏ ô tô, … có thể làm từ vật liệu composite."
+    },
+    {
+        question: "Câu 12: Phát biểu nào sau đây không đúng khi nói về vật liệu composite?",
+        answers: [
+            { text: "Thành phần vật liệu composite gồm vật liệu nền (chủ yếu là polymer) và vật liệu cốt (cốt sợi hoặc cốt hạt).", correct: false },
+            { text: "Vật liệu composite là vật liệu được tổ hợp từ hai hoặc nhiều vật liệu khác nhau, tạo nên vật liệu mới có tính chất kém hơn so với các vật liệu thành phần.", correct: true },
+            { text: "Vật liệu cốt có vai trò đảm bảo cho composite có được các đặc tính cơ học cần thiết.", correct: false },
+            { text: "Vật liệu nền có tác dụng kết dính, bảo vệ và phân bố đồng đều các thành phần khác trong composite.", correct: false }
+        ],
+        explanation: "Vật liệu composite có tính chất ưu việt hơn so với các vật liệu thành phần."
+    },
+    {
+        question: "Câu 13: Polyvinyl clorua (PVC) có tính chất gì?",
+        answers: [
+            { text: "Dẻo và dễ uốn.", correct: false },
+            { text: "Khó uốn, có thể bị giòn.", correct: true },
+            { text: "Dễ cháy.", correct: false },
+            { text: "Tham gia phản ứng oxi hóa khử.", correct: false }
+        ],
+        explanation: "Polyvinyl clorua (PVC) có tính chất khó uốn, có thể bị giòn."
+    },
+    {
+        question: "Câu 14: Dựa vào cấu trúc phân tử, nhựa nào sau đây không phải nhựa nhiệt dẻo?",
+        answers: [
+            { text: "Polystyren.", correct: false },
+            { text: "Polyvinyl clorua.", correct: false },
+            { text: "Nylon.", correct: true },
+            { text: "Polyethylene.", correct: false }
+        ],
+        explanation: "Nylon không phải nhựa nhiệt dẻo."
+    },
+    {
+        question: "Câu 15: Chất dẻo PVC được ứng dụng làm gì?",
+        answers: [
+            { text: "Làm sợi tổng hợp.", correct: false },
+            { text: "Làm chất dẻo trong các ngành xây dựng.", correct: true },
+            { text: "Dùng làm xốp trong y tế.", correct: false },
+            { text: "Làm nhựa tái chế.", correct: false }
+        ],
+        explanation: "Chất dẻo PVC được ứng dụng làm chất dẻo trong các ngành xây dựng."
+    },
+    {
+        question: "Câu 16: Loại tơ nào sau đây có thành phần chính protein?",
+        answers: [
+            { text: "Tơ tằm và sợi bông.", correct: false },
+            { text: "Tơ tằm và tơ visco.", correct: false },
+            { text: "Len và sợi bông.", correct: false },
+            { text: "Tơ tằm và len.", correct: true }
+        ],
+        explanation: "Loại tơ có thành phần chính protein là tơ tằm và len."
+    },
+    {
+        question: "Câu 17: Trong những năm 30 của thế kỉ XX, các nhà hóa học của hãng Du Pont (Mỹ) đã thông báo phát minh ra một loại vật liệu “mỏng hơn tơ nhện, bền hơn thép và đẹp hơn lụa”. Theo thời gian, vật liệu này đã có mặt trong cuộc sống hàng ngày của con người, phổ biến trong các sản phẩm như lốp xe, dù, quần áo, tất, ... Hãng Du Pont đã thu được hàng tỷ đô la mỗi năm bằng sáng chế về loại vật liệu này. Một trong số vật liệu đó là tơ nylon-6. Công thức một đoạn mạch của tơ nylon-6 là",
+        answers: [
+            { text: "-(-CH2CH=CH-CH2-)n-.", correct: false },
+            { text: "-(-NH[CH2]5CO-)n-.", correct: true },
+            { text: "-(-NH[CH2]6CO-)n -.", correct: false },
+            { text: "-(-NH[CH2]6NHCO[CH2]4CO-)n-.", correct: false }
+        ],
+        explanation: "Công thức một đoạn mạch của tơ nylon-6 là -(-NH[CH2]5CO-)n-."
+    },
+    {
+        question: "Câu 18: Monomer nào sau đây dùng để trùng hợp tạo ra polycaproamide (tơ capron)?",
+        answers: [
+            { text: "Hexamethylenediamine.", correct: false },
+            { text: "Caprolactam.", correct: true },
+            { text: "ε–aminocaproic acid.", correct: false },
+            { text: "ω–aminoenanthic acid.", correct: false }
+        ],
+        explanation: "Monomer dùng để trùng hợp tạo ra polycaproamide (tơ capron) là caprolactam."
+    },
+    {
+        question: "Câu 19: Tơ nylon-6,6 được điều chế bằng phản ứng trùng ngưng",
+        answers: [
+            { text: "HOOC-(CH2)2-CH(NH2)-COOH.", correct: false },
+            { text: "H2N-(CH2)5-COOH.", correct: false },
+            { text: "HOOC-(CH2)4-COOH và H2N-(CH2)6-NH2.", correct: true },
+            { text: "HOOC-(CH2)4-COOH và HO-(CH2)2-OH.", correct: false }
+        ],
+        explanation: "Tơ nylon-6,6 được điều chế bằng phản ứng trùng ngưng HOOC-(CH2)4-COOH và H2N-(CH2)6-NH2."
+    },
+    {
+        question: "Câu 20: Vật liệu tổng hợp X có hình sợi dài, mảnh và giữ nhiệt tốt thường dùng để đệt vải may quần áo ấm hoặc bệt thành sợi (len) đan áo rét. E bền với nhiệt, bền trong môi trường acid và base. Vật liệu X là",
+        answers: [
+            { text: "Tơ tằm.", correct: false },
+            { text: "polybuta-1,3-diene.", correct: false },
+            { text: "polyethylene.", correct: false },
+            { text: "polyacrylonitrile.", correct: true }
+        ],
+        explanation: "Vật liệu polymer dùng để bện sợi “len” để đan áo rét là polyacrylonitrile."
+    },
+    {
+        question: "Câu 21: Vật liệu tổng hợp X có tính dai, bền, mềm mại, óng mượt, ít thấm nước, giặt mau khô, nhưng kém bền với nhiệt, với acid và base, thường dùng để đệt vải may mặc, vải lót săm lốp xe, dệt bít tất… Vật liệu X là",
+        answers: [
+            { text: "tơ nitron.", correct: false },
+            { text: "bông.", correct: false },
+            { text: "tơ tằm.", correct: false },
+            { text: "nylon-6,6.", correct: true }
+        ],
+        explanation: "Nylon-6,6 có tính dai, bền, mềm mại, óng mượt, ít thấm nước, giặt mau khô, nhưng kém bền với nhiệt, với acid và base, thường dùng để đệt vải may mặc, vải lót săm lốp xe, dệt bít tất…"
+    },
+    {
+        question: "Câu 22: Tơ tằm và tơ nylon-6,6 có chung đặc điểm nào sau đây?",
+        answers: [
+            { text: "Có cùng phân tử khối.", correct: false },
+            { text: "Đều thuộc loại tơ tổng hợp.", correct: false },
+            { text: "Đều kém bền trong môi trường kiềm.", correct: true },
+            { text: "Đều thuộc loại tơ thiên nhiên.", correct: false }
+        ],
+        explanation: "Tơ tằm và tơ nylon-6,6 có chung đặc điểm là đều kém bền trong môi trường kiềm vì có chứa liên kết -CO-NH- nên dễ bị thủy phân."
+    },
+    {
+        question: "Câu 23: Trong số các loại tơ sau: tơ tằm, tơ visco, tơ cellulose acetate, tơ capron, len, tơ nylon - 6,6. Những tơ thuộc loại polymer nhân tạo là",
+        answers: [
+            { text: "tơ nylon -6,6 và tơ capron.", correct: false },
+            { text: "tơ tằm và len.", correct: false },
+            { text: "tơ visco và tơ nylon -6,6.", correct: false },
+            { text: "tơ visco và tơ cellulose acetate.", correct: true }
+        ],
+        explanation: "Những tơ thuộc loại polymer nhân tạo là tơ visco và tơ cellulose acetate."
+    },
+    {
+        question: "Câu 24: Phát biểu nào sau đây là đúng về cao su?",
+        answers: [
+            { text: "Cao su là những vật liệu polymer có tính chất bị biến dạng khi chịu tác dụng của lực bên ngoài và vẫn giữ nguyên sự biến dạng đó khi thôi tác dụng.", correct: false },
+            { text: "Cao su là những vật liệu polymer có tính chất bị biến dạng khi chịu tác dụng của lực bên ngoài và trở lại trạng thái ban đầu khi lực thôi tác dụng.", correct: true },
+            { text: "Cao su là những vật liệu polymer có tính chất bị biến dạng khi chịu tác dụng của lực bên ngoài và biến đổi sang dạng khác khi thôi tác dụng.", correct: false },
+            { text: "Cao su là những vật liệu polymer không có bị biến dạng khi chịu tác dụng của lực bên ngoài.", correct: false }
+        ],
+        explanation: "Cao su là những vật liệu polymer có tính chất bị biến dạng khi chịu tác dụng của lực bên ngoài và trở lại trạng thái ban đầu khi lực thôi tác dụng."
+    },
+    {
+        question: "Câu 25: Polymer nào sau đây không thuộc loại cao su?",
+        answers: [
+            { text: "Polychloprene.", correct: false },
+            { text: "Polyisoprene.", correct: false },
+            { text: "Poly(methyl methacrylate).", correct: true },
+            { text: "Polybuta – 1,2 - dinene", correct: false }
+        ],
+        explanation: "Poly(methyl methacrylate) thuộc loại chất dẻo."
+    },
+    {
+        question: "Câu 26: Cao su buna - S và cao su buna - N là sản phẩm đồng trùng hợp của buta-1,3-diene với",
+        answers: [
+            { text: "styrene và ammonia.", correct: false },
+            { text: "styrene và acrylonitrile.", correct: true },
+            { text: "styrene và acrylonitrile.", correct: false },
+            { text: "sulfur và vinyl cyanide.", correct: false }
+        ],
+        explanation: "Cao su buna - S và cao su buna - N là sản phẩm đồng trùng hợp của buta-1,3-diene với styrene (C6H5CH=CH2) và acrylonitrile (CH2=CHCN)."
+    },
+    {
+        question: "Câu 27: Công ty The Goodyear Tire & Rubber là một trong những công ty lốp xe hàng đầu tại Mỹ. Họ sản xuất lốp xe bằng cách sử dụng cao su thiên nhiên và cao su tổng hợp. Những chất nào sau đây được sử dụng làm cao su tổng hợp?",
+        answers: [
+            { text: "Polystyrene và polyvinyl chloride.", correct: false },
+            { text: "Polyacrylonitrile và cao su polychloroprene.", correct: true },
+            { text: "Polyethylene và polyvinyl alcohol.", correct: false },
+            { text: "Polystyrene và polycarbonate.", correct: false }
+        ],
+        explanation: "Chất được sử dụng làm cao su tổng hợp là polyacrylonitrile và cao su polychloroprene."
+    },
+    {
+        question: "Câu 28: Trước đây, sự hiện diện của cao su tự nhiên đã được sử dụng để làm vật liệu cách điện. Vật liệu cao su này có đặc tính tốt hơn so với những loại vật liệu khác. Cao su có tính năng cách điện tốt hơn tất cả các loại cao su tổng hợp, một trong số đó là cao su silicone. Vậy chất nào sau đây thuộc nhóm cao su tổng hợp?",
+        answers: [
+            { text: "Cao su polyisoprene.", correct: false },
+            { text: "Cao su polychloroprene.", correct: true },
+            { text: "Cao su polybutadiene.", correct: false },
+            { text: "Cao su cao su thiên nhiên.", correct: false }
+        ],
+        explanation: "Cao su polychloroprene là loại cao su tổng hợp."
+    },       
+    {
+    question: "Câu 29: Vật liệu cao su nào sau đây có tính chất chịu nhiệt tốt nhất?",
+    answers: [
+        { text: "Cao su thiên nhiên.", correct: false },
+        { text: "Cao su polyisoprene.", correct: false },
+        { text: "Cao su silicone.", correct: true },
+        { text: "Cao su polychloroprene.", correct: false }
+    ],
+    explanation: "Cao su silicone có tính chất chịu nhiệt tốt nhất trong các loại cao su."
+},
+{
+    question: "Câu 30: Khi tăng nhiệt độ, cao su thiên nhiên sẽ có tính chất gì?",
+    answers: [
+        { text: "Dẻo hơn.", correct: true },
+        { text: "Cứng hơn.", correct: false },
+        { text: "Không thay đổi tính chất.", correct: false },
+        { text: "Trở nên giòn.", correct: false }
+    ],
+    explanation: "Khi tăng nhiệt độ, cao su thiên nhiên sẽ trở nên dẻo hơn."
+}
+];
+
+let currentQuestionIndex = 0;
+        let score = 0;
+        const userAnswers = [];
+
+        const quizForm = document.getElementById('quiz-form');
+        const resultsSection = document.getElementById('results');
+        const scoreDisplay = document.getElementById('score');
+        const correctAnswersDisplay = document.getElementById('correct-answers');
+        const incorrectAnswersDisplay = document.getElementById('incorrect-answers');
+        const nextSubmitBtn = document.getElementById('next-submit-btn');
+        const questionNavigation = document.getElementById('question-navigation');
+
+        function startQuiz() {
+            showQuestion();
+            createQuestionNavigation();
+        }
+
+        function showQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            quizForm.innerHTML = `
+                <h2>${currentQuestion.question}</h2>
+                ${currentQuestion.answers.map((answer, index) => `
+                    <p><input type="radio" id="option${index + 1}" name="question" value="${answer.text}">
+                    <label for="option${index + 1}">${answer.text}</label></p>
+                `).join('')}`;
+
+            if (currentQuestionIndex === questions.length - 1) {
+                nextSubmitBtn.textContent = "Nộp bài";
+            } else {
+                nextSubmitBtn.textContent = "Tiếp theo";
+            }
+
+            updateQuestionNavigation();
+        }
+
+        function submitAnswer() {
+            const selectedAnswer = document.querySelector('input[name="question"]:checked');
+    if (selectedAnswer) {
+        const currentQuestion = questions[currentQuestionIndex];
+        userAnswers[currentQuestionIndex] = selectedAnswer.value;
+
+        if (currentQuestion.answers.find(answer => answer.text === selectedAnswer.value && answer.correct)) {
+            score++;
+        }
+
+        updateQuestionNavigation();  // Cập nhật màu sắc nút khi đã trả lời xong
+
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
+        } else {
+            showResults();
+        }
+    } else {
+        alert('Vui lòng chọn một đáp án.');
+    }
+}
+
+        function showResults() {
+            quizForm.style.display = 'none';
+            resultsSection.style.display = 'block';
+
+            scoreDisplay.textContent = `Bạn đã trả lời đúng ${score}/${questions.length} câu.`;
+
+            correctAnswersDisplay.innerHTML = '<h3>Các câu trả lời đúng:</h3>' + questions.map((question, index) => {
+                const correctAnswer = question.answers.find(answer => answer.correct).text;
+                return `<p><strong>${index + 1}. ${question.question}</strong><br>Đáp án chi tiết: ${correctAnswer}<br>${question.explanation}</p>`;
+            }).join('');
+
+            incorrectAnswersDisplay.innerHTML = '<h3>Các câu trả lời sai:</h3>' + questions.map((question, index) => {
+                if (!question.answers.find(answer => answer.text === userAnswers[index] && answer.correct)) {
+                    const correctAnswer = question.answers.find(answer => answer.correct).text;
+                    return `<p style="color: red;"><strong>${index + 1}. ${question.question}</strong><br>Đáp án của bạn: ${userAnswers[index]}<br>Đáp án đúng: ${correctAnswer}<br>${question.explanation}</p>`;
+                }
+                return '';
+            }).join('');
+        }
+
+        function createQuestionNavigation() {
+            questionNavigation.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                const questionLink = document.createElement('li');
+                questionLink.textContent = i + 1;
+                questionLink.onclick = () => goToQuestion(i);
+                questionNavigation.appendChild(questionLink);
+            }
+        }
+
+        function updateQuestionNavigation() {
+            const questionLinks = questionNavigation.children;
+            for (let i = 0; i < questionLinks.length; i++) {
+                if (userAnswers[i] !== undefined) {
+                    questionLinks[i].style.backgroundColor = 'green';
+                    questionLinks[i].style.color = 'white';
+                } else {
+                    questionLinks[i].style.backgroundColor = 'transparent';
+                    questionLinks[i].style.color = 'black';
+                }
+            }
+        }
+
+        function goToQuestion(index) {
+            currentQuestionIndex = index;
+            showQuestion();
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers.length = 0;
+            resultsSection.style.display = 'none';
+            quizForm.style.display = 'block';
+            startQuiz();
+        }
+
+        // Bắt đầu quiz khi trang tải
+        window.onload = startQuiz;
+    </script>
+</body>
+</html>

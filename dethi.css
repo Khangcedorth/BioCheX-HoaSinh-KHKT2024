@@ -13,7 +13,7 @@ h2 {
     font-size: 18px;
     margin-bottom: 20px;
     padding: 15px;               /* Thêm khoảng đệm cho khung */
-    border: 1px solid #cccccc;   /* Tạo khung viền nhỏ xung quanh mỗi câu hỏi */
+    border: 1px solid #0b0909;   /* Tạo khung viền nhỏ xung quanh mỗi câu hỏi */
     border-radius: 5px;          /* Bo tròn các góc của khung */
     background-color: #ffffff;
     color: black;

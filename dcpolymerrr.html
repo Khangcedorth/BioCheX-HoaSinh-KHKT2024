@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="BioCheX.png" type="image/x-icon">
+    <title>BioCheX - Khám Phá Thế Giới qua Hoá Sinh</title>
+    <link rel="stylesheet" href="btester.css">
+</head>
+<body>
+    <header>
+        <h1>BioCheX - Khám Phá Thế Giới qua Hoá Sinh</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang chủ</a></li>
+            </ul>
+            <marquee behavior="alternate">
+                <marquee style="color:#ffffff; font-weight:bold" width="700px">I LOVE CHEMISTRY - HOÁ HỌC ĐƯA ĐẾN TƯƠNG LAI</marquee>
+            </marquee>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="quiz">
+            <h2>Câu hỏi</h2>
+            <form id="quiz-form">
+                <!-- Câu hỏi sẽ được hiển thị ở đây -->
+            </form>
+            <button id="next-submit-btn" onclick="submitAnswer()">Nộp bài</button>
+        </section>
+
+        <section id="question-list">
+            <h2>Danh sách câu hỏi</h2>
+            <ul id="question-navigation">
+                <!-- Số câu hỏi sẽ được thêm vào đây -->
+            </ul>
+        </section>
+
+        <section id="results" style="display: none;">
+            <h2>Kết quả</h2>
+            <div id="score"></div>
+            <div id="correct-answers"></div>
+            <div id="incorrect-answers"></div>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkNvC9P6pIqkHU2tDhRbPnV3Y36m7NdjiR5GVopADP9PkCHn7E0Mxs2grIyEZ7R66txHJFlQsEg1cNMsuubQ-h0EBUoUtQJ_nlHLc6MAPOiUeZSuDmPATHgLcFG-w3989IWawhrEwoV7bMrRSMmJQmmvcWs0Gdt7nZ2fQmBBRbdFQO7CTOO4XK9Tj7dA/s940/B%E1%BA%A3n%20sao%20c%E1%BB%A7a%20Ngh%C4%A9%20kh%C3%A1c%20%C4%91i%20(B%C3%A0i%20%C4%91%C4%83ng%20Facebook)%20(16).png" alt="Congratulations Image" id="congratulations-image">
+
+            <button onclick="restartQuiz()">Làm lại</button>
+        </section>
+    </main>
+
+    <footer>
+        <ul>
+            <p>BioCheX - Hoá Sinh trong đời sống. HVT-TNK</p>
+        </ul>
+    </footer>
+    <script>
+        // Dữ liệu về các câu hỏi và đáp án
+        const questions = [
+    {
+        question: "Câu 1: Khái niệm nào sau đây đúng khi nói về polymer?",
+        answers: [
+            { text: "Polymer là những hợp chất có phân tử khối nhỏ do nhiều đơn vị nhỏ (gọi là monomer) liên kết với nhau tạo nên.", correct: false },
+            { text: "Polymer là những hợp chất có phân tử khối lớn do nhiều đơn vị nhỏ (gọi là mắt xích) liên kết với nhau tạo nên.", correct: true },
+            { text: "Polymer là những hợp chất có phân tử khối lớn do nhiều đơn vị nhỏ (gọi là monomer) liên kết với nhau tạo nên.", correct: false },
+            { text: "HCOOC6H5", correct: false }
+        ],
+        explanation: "Polymer là những hợp chất có phân tử khối lớn do nhiều đơn vị nhỏ (gọi là mắt xích) liên kết với nhau tạo nên."
+    },
+    {
+        question: "Câu 2: Chất nào dưới đây không phải là polymer?",
+        answers: [
+            { text: "Cellulose.", correct: false },
+            { text: "Tinh bột.", correct: false },
+            { text: "Lipid.", correct: true },
+            { text: "Protein.", correct: false }
+        ],
+        explanation: "Lipid không phải là polymer."
+    },
+    {
+        question: "Câu 3: Tính chất vật lí chung của polymer là",
+        answers: [
+            { text: "chất lỏng, không màu, không tan trong nước.", correct: false },
+            { text: "chất lỏng, không màu, tan tốt trong nước.", correct: false },
+            { text: "chất rắn, không bay hơi, không tan trong nước.", correct: true },
+            { text: "chất rắn, không bay hơi, dễ tan trong nước.", correct: false }
+        ],
+        explanation: "Tính chất vật lí chung của polymer là chất rắn, không bay hơi, không tan trong nước."
+    },
+    {
+        question: "Câu 4: Phát biểu nào sai khi nói về tính chất vật lí của polymer?",
+        answers: [
+            { text: "Ở điều kiện thường, polymer là chất rắn không bay hơi.", correct: false },
+            { text: "Polymer có nhiệt độ nóng chảy xác định.", correct: true },
+            { text: "Polymer không tan trong nước nhưng tan được trong một số dung môi thích hợp.", correct: false },
+            { text: "Polymer có thể dùng làm vật liệu polymer như nhựa, cao su, tơ, composite, keo dán,…", correct: false }
+        ],
+        explanation: "Polymer không có nhiệt độ nóng chảy xác định."
+    },
+    {
+        question: "Câu 5: Các động vật ăn cỏ như trâu, bò, dê, cừu,... có thể chuyển hoá cellulose trong thức ăn thành glucose bằng enzyme cellulase để cung cấp năng lượng cho cơ thể. Phản ứng chuyển hoá cellulose thành glucose thuộc loại phản ứng nào sau đây?",
+        answers: [
+            { text: "Giữ nguyên mạch polymer.", correct: false },
+            { text: "Cắt mạch polymer.", correct: true },
+            { text: "Tăng mạch polymer.", correct: false },
+            { text: "Trùng ngưng.", correct: false }
+        ],
+        explanation: "Phản ứng chuyển hoá cellulose thành glucose thuộc loại phản ứng cắt mạch polymer."
+    },
+    {
+        question: "Câu 6: Quá trình lưu hoá cao su thuộc loại phản ứng",
+        answers: [
+            { text: "Giữ nguyên mạch polymer.", correct: false },
+            { text: "Cắt mạch polymer.", correct: false },
+            { text: "Tăng mạch polymer.", correct: true },
+            { text: "Phân hủy polymer.", correct: false }
+        ],
+        explanation: "Quá trình lưu hoá cao su thuộc loại phản ứng tăng mạch polymer."
+    },
+    {
+        question: "Câu 7: Thủy phân capron trong môi trường acid hoặc kiềm, đun nóng thu được chất nào sau đây?",
+        answers: [
+            { text: "H2N-[CH2]5-COOH.", correct: true },
+            { text: "H2N-[CH2]6-COOH.", correct: false },
+            { text: "H2N-[CH2]6-NH2.", correct: false },
+            { text: "HOOC-[CH2]4-COOH.", correct: false }
+        ],
+        explanation: "Thủy phân capron trong môi trường acid hoặc kiềm, đun nóng thu được H2N-[CH2]5-COOH."
+    },
+    {
+        question: "Câu 8: Polystyrene bị nhiệt phân hủy tạo thành chất nào sau đây?",
+        answers: [
+            { text: "C6H5-CH2-CH3.", correct: false },
+            { text: "C6H5-CH=CH2.", correct: true },
+            { text: "C6H5-C≡CH.", correct: false },
+            { text: "C6H5-CH3.", correct: false }
+        ],
+        explanation: "Polystyrene bị nhiệt phân hủy tạo thành C6H5-CH=CH2."
+    },
+    {
+        question: "Câu 9: Polyisoprene phản ứng với hydrogen chloride thu được polymer chứa các mắt xích nào sau đây?",
+        answers: [
+            { text: "-CH2-CHCl-CH(CH3)-CH2-.", correct: false },
+            { text: "-CH2-CH2-(Cl)C(CH3)-CH2-.", correct: true },
+            { text: "-CH2-CH2-CH(Cl)-CH2-", correct: false },
+            { text: "-CH2-CH2-CH(CH3)-CHCl-.", correct: false }
+        ],
+        explanation: "Polyisoprene phản ứng với hydrogen chloride thu được polymer chứa các mắt xích -CH2-CH2-(Cl)C(CH3)-CH2-."
+    },
+    {
+        question: "Câu 10: Polybuta-1,3-diene phản ứng với bromine thu được polymer chứa các mắt xích nào sau đây?",
+        answers: [
+            { text: "-CHBr-CH2=CH2-CHBr-.", correct: false },
+            { text: "-CH2-CHBr-CHBr-CH2-.", correct: true },
+            { text: "-CH2-CH2-CHBr-CH2-.", correct: false },
+            { text: "-CH2-CHBr-CH2-CHBr-.", correct: false }
+        ],
+        explanation: "Polybuta-1,3-diene phản ứng với bromine thu được polymer chứa các mắt xích là -CH2-CHBr-CHBr-CH2-."
+    },
+    {
+        question: "Câu 11: Khi đun cao su với lưu huỳnh thì thu được cao su nào sau đây?",
+        answers: [
+            { text: "Cao su lưu hóa.", correct: true },
+            { text: "Cao su buna-N.", correct: false },
+            { text: "Cao su buna-S.", correct: false },
+            { text: "Cao su thiên nhiên.", correct: false }
+        ],
+        explanation: "Khi đun cao su với lưu huỳnh thì thu được cao su lưu hóa."
+    },
+    {
+        question: "Câu 12: Poly(vinyl acetate) tác dụng với dung dịch NaOH đun nóng thu được polymer chứa các mắt xích nào sau đây?",
+        answers: [
+            { text: "-CH2-CH(OH)-.", correct: true },
+            { text: "-CH2-CH(COONa)-.", correct: false },
+            { text: "-CH2-CH(ONa)-.", correct: false },
+            { text: "-CH2-CH(COOH)-.", correct: false }
+        ],
+        explanation: "Poly(vinyl acetate) tác dụng với dung dịch NaOH đun nóng thu được polymer chứa các mắt xích -CH2-CH(OH)-."
+    },
+    {
+        question: "Câu 13: Poly(methyl methacrylate) tác dụng với dung dịch NaOH đun nóng thu được polymer chứa các mắt xích nào sau đây?",
+        answers: [
+            { text: "-CH2-(CH3)CH(OH)-.", correct: false },
+            { text: "-CH2-(CH3)CH(COOH)-.", correct: false },
+            { text: "-CH2-(CH3)CH(COONa)-.", correct: true },
+            { text: "-CH2-(CH3)CH-CH2-CH2-.", correct: false }
+        ],
+        explanation: "Poly(methyl methacrylate) tác dụng với dung dịch NaOH đun nóng thu được polymer chứa các mắt xích là -CH2-(CH3)CH(COONa)-."
+    },
+    {
+        question: "Câu 14: Phản ứng nào sau đây không thuộc loại phản ứng cắt mạch polymer?",
+        answers: [
+            { text: "Nhiệt phân cao su.", correct: false },
+            { text: "Thủy phân protein.", correct: false },
+            { text: "Thủy phân cellulose.", correct: false },
+            { text: "Lưu hóa cao su.", correct: true }
+        ],
+        explanation: "Lưu hóa cao su không thuộc loại phản ứng cắt mạch polymer."
+    },
+    {
+        question: "Câu 15: Polyvinyl chloride (PVC) có tính chất vật lí như thế nào?",
+        answers: [
+            { text: "Chất lỏng, không màu.", correct: false },
+            { text: "Chất rắn, không tan trong nước, tan trong benzen.", correct: true },
+            { text: "Chất rắn, tan trong nước, không tan trong benzen.", correct: false },
+            { text: "Chất rắn, tan trong nước, tan trong ethanol.", correct: false }
+        ],
+        explanation: "Polyvinyl chloride (PVC) là chất rắn, không tan trong nước, tan trong benzen."
+    },
+    {
+        question: "Câu 16: Phản ứng nào sau đây không thuộc loại phản ứng giữ nguyên mạch polymer?",
+        answers: [
+            { text: "Poly(buta-1,3-diene styrene) phản ứng với hydrogen bromide.", correct: false },
+            { text: "Poly(vinyl acetate) tác dụng với dung dịch NaOH đun nóng.", correct: false },
+            { text: "Polychloroprene phản ứng với hydrogen chloride.", correct: false },
+            { text: "Thủy phân tinh bột bằng xúc tác enzyme.", correct: true }
+        ],
+        explanation: "Thủy phân tinh bột bằng xúc tác enzyme là phản ứng cắt mạch polymer."
+    },
+    {
+        question: "Câu 17: Phản ứng nào sau đây thuộc loại phản ứng tăng mạch polymer?",
+        answers: [
+            { text: "Đun nóng cao su với lưu huỳnh.", correct: true },
+            { text: "Thủy phân protein trong môi trường acid hoặc kiềm, đun nóng.", correct: false },
+            { text: "Thủy phân poly(ethylene terephthalate) trong môi trường acid hoặc kiềm, đun nóng.", correct: false },
+            { text: "Poly(buta-1,3-diene acrylonitrile) phản ứng với chlorine.", correct: false }
+        ],
+        explanation: "Thủy phân protein trong môi trường acid hoặc kiềm, đun nóng; thủy phân poly(ethylene terephthalate) trong môi trường acid hoặc kiềm, đun nóng; poly(buta-1,3-diene acrylonitrile) phản ứng với chlorine là phản ứng giữ nguyên mạch polymer."
+    },
+    {
+        question: "Câu 18: So với polymer chưa khâu mạch, polymer khâu mạch có những đặc điểm nào sau đây?",
+        answers: [
+            { text: "Polymer khâu mạch có mạng không gian nên khó nóng chảy, khó hòa tan và kém bền hơn.", correct: true },
+            { text: "Polymer khâu mạch có mạch phân nhánh nên khó nóng chảy, khó hòa tan và bền hơn.", correct: false },
+            { text: "Polymer khâu mạch có mạng không phân nhánh nên khó nóng chảy, khó hòa tan và bền hơn.", correct: false },
+            { text: "Polymer khâu mạch có mạng không gian nên khó nóng chảy, khó hòa tan và kém bền hơn.", correct: false }
+        ],
+        explanation: "So với polymer chưa khâu mạch, polymer khâu mạch có mạng không gian nên khó nóng chảy, khó hòa tan và kém bền hơn."
+    },
+    {
+        question: "Câu 19: Quá trình kết hợp nhiều phân tử nhỏ (monomer) giống nhau hay tương tự nhau thành phân tử lớn (polymer) được gọi là phản ứng",
+        answers: [
+            { text: "xà phòng hóa.", correct: false },
+            { text: "thủy phân.", correct: false },
+            { text: "trùng hợp.", correct: true },
+            { text: "trùng ngưng.", correct: false }
+        ],
+        explanation: "Quá trình kết hợp nhiều phân tử nhỏ (monomer) giống nhau hay tương tự nhau thành phân tử lớn (polymer) được gọi là phản ứng trùng hợp."
+    },
+    {
+        question: "Câu 20: Quá trình kết hợp nhiều phân tử nhỏ (monomer) thành phân tử lớn (polymer) đồng thời giải phóng các phân tử nhỏ khác (thí dụ H2O) được gọi là phản ứng",
+        answers: [
+            { text: "xà phòng hóa.", correct: false },
+            { text: "thủy phân.", correct: false },
+            { text: "trùng ngưng.", correct: true },
+            { text: "trùng hợp", correct: false }
+        ],
+        explanation: "Quá trình kết hợp nhiều phân tử nhỏ (monomer) giống nhau hay tương tự nhau thành phân tử lớn (polymer) được gọi là phản ứng trùng ngưng."
+    },
+    {
+        question: "Câu 21: Chất nào sau đây có thể tham gia phản ứng trùng ngưng?",
+        answers: [
+            { text: "CH2 = CH2.", correct: false },
+            { text: "CH2 = CH(CH3).", correct: false },
+            { text: "CH2 = CHC6H5.", correct: false },
+            { text: "H2N[CH2]5COOH.", correct: true }
+        ],
+        explanation: "Điều kiện về cấu tạo để monomer tham gia phản ứng trùng ngưng là trong phân tử phải có ít nhất hai nhóm chức có khả năng phản ứng để tạo liên kết."
+    },
+    {
+        question: "Câu 22: Loại polymer nào sau đây được điều chế bằng phản ứng trùng ngưng?",
+        answers: [
+            { text: "PVC.", correct: false },
+            { text: "PET", correct: true },
+            { text: "Cao su buna.", correct: false },
+            { text: "Teflon.", correct: false }
+        ],
+        explanation: "PET được điều chế bằng phản ứng trùng ngưng từ monomer là HO-CH2-CH2-OH, p-HOOC-C6H4-COOH."
+    },
+    {
+        question: "Câu 23: Chất dẻo nào sau đây có khả năng phân hủy sinh học tốt?",
+        answers: [
+            { text: "PVC.", correct: false },
+            { text: "PS.", correct: false },
+            { text: "Poly(lactic acid).", correct: true },
+            { text: "Cao su.", correct: false }
+        ],
+        explanation: "Poly(lactic acid) có khả năng phân hủy sinh học tốt."
+    },
+    {
+        question: "Câu 24: Chất có thể trùng hợp tạo ra polymer là",
+        answers: [
+            { text: "C2H5OH.", correct: false },
+            { text: "CH3COOH.", correct: false },
+            { text: "CH2=CH-CH3.", correct: true },
+            { text: "CH3CH3.", correct: false }
+        ],
+        explanation: "Điều kiện về cấu tạo để monomer có thể tham gia phản ứng trùng hợp là trong phân tử phải có các liên kết bội hoặc vòng kém bền."
+    },
+    {
+        question: "Câu 25: Chất nào sau đây không có khả năng tham gia phản ứng trùng hợp?",
+        answers: [
+            { text: "Caprolactam.", correct: false },
+            { text: "Toluene.", correct: true },
+            { text: "Styrene.", correct: false },
+            { text: "Acrylonitrile.", correct: false }
+        ],
+        explanation: "Toluene (C6H5CH3) không có khả năng tham gia phản ứng trùng hợp."
+    },
+    {
+        question: "Câu 26: Trong các chất sau: ethane, propene, benzene, glycine, styrene. Chất nào cho được phản ứng trùng hợp để tạo ra được polymer?",
+        answers: [
+            { text: "propene, benzene.", correct: false },
+            { text: "styrene, propene.", correct: true },
+            { text: "propene, benzene, glycine, styrene.", correct: false },
+            { text: "glycine.", correct: false }
+        ],
+        explanation: "Điều kiện về cấu tạo để monomer có thể tham gia phản ứng trùng hợp là trong phân tử phải có các liên kết bội hoặc vòng kém bền nên styrene (CH2 = CHC6H5) và propene (CH2 = CH-CH3) có khả năng tham gia phản ứng trùng hợp để tạo ra polymer."
+    },
+    {
+        question: "Câu 27: Cho các chất sau: caprolactam, phenol, toluene, methyl methacrylate, isoprene. Số chất có khả năng tham gia phản ứng trùng hợp là",
+        answers: [
+            { text: "4.", correct: false },
+            { text: "5.", correct: false },
+            { text: "3.", correct: true },
+            { text: "6.", correct: false }
+        ],
+        explanation: "Số chất có khả năng tham gia phản ứng trùng hợp là 3: caprolactam, methyl methacrylate, isoprene."
+    },
+    {
+        question: "Câu 28: Trong các polymer sau: (1) poly(methyl methacrylate); (2) polystyrene; (3) nylon-7; (4) poly(vinyl chloride); (5) nylon-6,6; (6) poly(phenol - formaldehyde). Số polymer là sản phẩm của trùng ngưng là",
+        answers: [
+            { text: "2.", correct: false },
+            { text: "3.", correct: true },
+            { text: "4.", correct: false },
+            { text: "5.", correct: false }
+        ],
+        explanation: "Số polymer là sản phẩm của trùng ngưng là (3) nylon-7; (5) nylon-6,6; (6) poly(phenol - formaldehyde)."
+            },       
+
+            {
+        question: "Câu 29: Trong các chất sau: poly(methyl methacrylate), poly(vinyl chloride), nylon-6,6, poly(phenol-formaldehyde), polystyrene. Chất nào là sản phẩm của phản ứng trùng hợp?",
+        answers: [
+            { text: "poly(methyl methacrylate)", correct: true },
+            { text: "nylon-6,6", correct: false },
+            { text: "poly(phenol-formaldehyde)", correct: false },
+            { text: "polystyrene", correct: true }
+        ],
+        explanation: "Poly(methyl methacrylate) và polystyrene là sản phẩm của phản ứng trùng hợp. Nylon-6,6 và poly(phenol-formaldehyde) là sản phẩm của phản ứng trùng ngưng."
+    },
+    {
+        question: "Câu 30: Trong số các polymer sau: (1) poly(ethylen terephthalate); (2) nylon-6; (3) cao su thiên nhiên; (4) polystyrene; (5) nylon-6,6. Số polymer là sản phẩm của phản ứng trùng ngưng là",
+        answers: [
+            { text: "1.", correct: false },
+            { text: "2.", correct: true },
+            { text: "3.", correct: false },
+            { text: "4.", correct: false },
+            { text: "5.", correct: true }
+        ],
+        explanation: "Nylon-6 và nylon-6,6 là sản phẩm của phản ứng trùng ngưng, trong khi poly(ethylene terephthalate) và polystyrene là sản phẩm của phản ứng trùng hợp."
+    }
+];
+
+let currentQuestionIndex = 0;
+        let score = 0;
+        const userAnswers = [];
+
+        const quizForm = document.getElementById('quiz-form');
+        const resultsSection = document.getElementById('results');
+        const scoreDisplay = document.getElementById('score');
+        const correctAnswersDisplay = document.getElementById('correct-answers');
+        const incorrectAnswersDisplay = document.getElementById('incorrect-answers');
+        const nextSubmitBtn = document.getElementById('next-submit-btn');
+        const questionNavigation = document.getElementById('question-navigation');
+
+        function startQuiz() {
+            showQuestion();
+            createQuestionNavigation();
+        }
+
+        function showQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            quizForm.innerHTML = `
+                <h2>${currentQuestion.question}</h2>
+                ${currentQuestion.answers.map((answer, index) => `
+                    <p><input type="radio" id="option${index + 1}" name="question" value="${answer.text}">
+                    <label for="option${index + 1}">${answer.text}</label></p>
+                `).join('')}`;
+
+            if (currentQuestionIndex === questions.length - 1) {
+                nextSubmitBtn.textContent = "Nộp bài";
+            } else {
+                nextSubmitBtn.textContent = "Tiếp theo";
+            }
+
+            updateQuestionNavigation();
+        }
+
+        function submitAnswer() {
+            const selectedAnswer = document.querySelector('input[name="question"]:checked');
+    if (selectedAnswer) {
+        const currentQuestion = questions[currentQuestionIndex];
+        userAnswers[currentQuestionIndex] = selectedAnswer.value;
+
+        if (currentQuestion.answers.find(answer => answer.text === selectedAnswer.value && answer.correct)) {
+            score++;
+        }
+
+        updateQuestionNavigation();  // Cập nhật màu sắc nút khi đã trả lời xong
+
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
+        } else {
+            showResults();
+        }
+    } else {
+        alert('Vui lòng chọn một đáp án.');
+    }
+}
+
+        function showResults() {
+            quizForm.style.display = 'none';
+            resultsSection.style.display = 'block';
+
+            scoreDisplay.textContent = `Bạn đã trả lời đúng ${score}/${questions.length} câu.`;
+
+            correctAnswersDisplay.innerHTML = '<h3>Các câu trả lời đúng:</h3>' + questions.map((question, index) => {
+                const correctAnswer = question.answers.find(answer => answer.correct).text;
+                return `<p><strong>${index + 1}. ${question.question}</strong><br>Đáp án chi tiết: ${correctAnswer}<br>${question.explanation}</p>`;
+            }).join('');
+
+            incorrectAnswersDisplay.innerHTML = '<h3>Các câu trả lời sai:</h3>' + questions.map((question, index) => {
+                if (!question.answers.find(answer => answer.text === userAnswers[index] && answer.correct)) {
+                    const correctAnswer = question.answers.find(answer => answer.correct).text;
+                    return `<p style="color: red;"><strong>${index + 1}. ${question.question}</strong><br>Đáp án của bạn: ${userAnswers[index]}<br>Đáp án đúng: ${correctAnswer}<br>${question.explanation}</p>`;
+                }
+                return '';
+            }).join('');
+        }
+
+        function createQuestionNavigation() {
+            questionNavigation.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                const questionLink = document.createElement('li');
+                questionLink.textContent = i + 1;
+                questionLink.onclick = () => goToQuestion(i);
+                questionNavigation.appendChild(questionLink);
+            }
+        }
+
+        function updateQuestionNavigation() {
+            const questionLinks = questionNavigation.children;
+            for (let i = 0; i < questionLinks.length; i++) {
+                if (userAnswers[i] !== undefined) {
+                    questionLinks[i].style.backgroundColor = 'green';
+                    questionLinks[i].style.color = 'white';
+                } else {
+                    questionLinks[i].style.backgroundColor = 'transparent';
+                    questionLinks[i].style.color = 'black';
+                }
+            }
+        }
+
+        function goToQuestion(index) {
+            currentQuestionIndex = index;
+            showQuestion();
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers.length = 0;
+            resultsSection.style.display = 'none';
+            quizForm.style.display = 'block';
+            startQuiz();
+        }
+
+        // Bắt đầu quiz khi trang tải
+        window.onload = startQuiz;
+    </script>
+</body>
+</html>

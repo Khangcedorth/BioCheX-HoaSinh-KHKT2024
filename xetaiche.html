@@ -32,6 +32,29 @@
             </form>
             <div id="preview"></div>
         </div>
+        
+        <script>
+            document.getElementById('uploadForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Ngăn không cho form tải lại trang
+                const fileInput = document.getElementById('fileInput');
+                const file = fileInput.files[0];
+        
+                if (file && file.type.startsWith('image/')) {
+                    const preview = document.getElementById('preview');
+                    preview.innerHTML = ''; // Xóa bản xem trước cũ
+        
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.style.width = '200px'; // Đặt kích thước cho ảnh
+                    img.onload = () => URL.revokeObjectURL(img.src); // Giải phóng bộ nhớ sau khi load ảnh
+        
+                    preview.appendChild(img); // Hiển thị ảnh
+                } else {
+                    alert("Vui lòng chọn một tệp hình ảnh.");
+                }
+            });
+        </script>
+        
 
         <div class="task-section">
             <h2>Các Công Việc Liên Quan đến Xà Phòng</h2>
