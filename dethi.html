@@ -486,8 +486,9 @@
 
 
     
-            // Hiển thị kết quả
-            document.getElementById("result").innerText = `Bạn đạt được ${score}/10 điểm.`;
+    const resultElement = document.getElementById("result");
+        resultElement.style.color = "black";  // Đổi màu chữ sang đen
+        resultElement.innerText = `Bạn đạt được ${score}/10 điểm.`;
         }
     </script>
 
