@@ -155,6 +155,10 @@
                 var mdElement = document.getElementById("md");
                 var neutralizeElement = document.getElementById("neutralize");
                 var imageElement = document.getElementById("image");
+                if (n < 50 || n > 200 || a < 50 || a > 200 || b < 50 || b > 200) {
+            alert("Vui lòng nhập lại các giá trị trong phạm vi hợp lệ (50 - 200) cho nhịp tim và huyết áp.");
+            return; // Dừng lại nếu có giá trị không hợp lệ
+        }
 
                 if (a > 140 && b > 90) {
                     resultElement.innerHTML = "Huyết áp cao";
