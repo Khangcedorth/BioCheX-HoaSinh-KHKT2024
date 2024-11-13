@@ -52,47 +52,33 @@
                 var concentrationVolumeElement = document.getElementById("concentrationVolume");
                 concentrationVolumeElement.innerHTML = ""; // Clear previous content
 
-                // Kiểm tra thông tin đầu vào
                 if (!acidName || isNaN(acidConcentration) || isNaN(acidVolume)) {
                     alert("Vui lòng nhập đầy đủ và chính xác các thông tin.");
                     return;
                 }
-
                 if (!acidName.startsWith("H")) {
                     alert("Vui lòng thử lại vì tên acid không đúng");
                     return;
                 }
-
                 var strongAcids = ["HCL", "HBR", "HI", "HNO3", "HCLO4", "H2SO4"];
                 var isStrongAcid = strongAcids.includes(acidName);
-
-                // Kiểm tra nồng độ acid để đảm bảo pH > 0 và không chia cho số tự nhiên bằng 0
                 if (acidConcentration <= 0) {
                     alert("Nồng độ acid phải lớn hơn 0.");
                     return;
                 }
-
                 var pH = -Math.log10(acidConcentration);
-
-                // Nếu pH không hợp lệ, bỏ qua trường hợp đó
                 if (isNaN(pH) || pH <= 0) {
                     resultElement.textContent = "Kết quả độ pH không hợp lệ.";
                     return;
                 }
-
                 resultElement.textContent = "Kết quả độ pH có trong acid: " + pH.toFixed(2);
-
                 acidStrengthElement.textContent = "Độ mạnh của dung dịch acid: " + (isStrongAcid ? "mạnh" : "yếu");
                 neutralizeElement.textContent = "Loại base tác dụng để trung hòa: " + (isStrongAcid ? "base mạnh" : "mọi loại base");
-
                 var baseConcentrations = [0.1, 0.5, 1];
-                var volumeTooSmallDisplayed = false; // Biến để theo dõi trạng thái thông báo thể tích quá bé
-
-                // Hiển thị thông tin base hoá trị 1 (loại bỏ kết quả không hợp lệ)
+                var volumeTooSmallDisplayed = false; 
                 baseConcentrations.forEach(function(concentration) {
                     if (concentration !== 0) {
                         var volume1 = (acidConcentration * acidVolume) / concentration;
-                        // Kiểm tra thể tích hợp lệ (> 0,001)
                         if (volume1 >= 0.01) {
                             concentrationVolumeElement.innerHTML += "<p>Nồng độ của base hóa trị 1: " + concentration.toFixed(1) + " M, Thể tích: " + volume1.toFixed(2) + " L</p>";
                         } else if (volume1 < 0.001 && !volumeTooSmallDisplayed) {

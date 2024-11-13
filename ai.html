@@ -60,86 +60,63 @@
         const introAudio = document.getElementById('introAudio');
 let isPlaying = false;
 let clickTimeout = null;
-
-// Xử lý sự kiện nhấn chuột
 document.addEventListener('click', function(event) {
     if (isPlaying) {
-        introAudio.pause(); // Tạm dừng nếu đang phát
-        introAudio.currentTime = 0; // Đặt lại thời gian phát
-        isPlaying = false; // Cập nhật trạng thái
+        introAudio.pause(); 
+        introAudio.currentTime = 0; 
+        isPlaying = false; 
     } else {
-        introAudio.play(); // Phát âm thanh nếu đang dừng
-        isPlaying = true; // Cập nhật trạng thái
+        introAudio.play(); 
+        isPlaying = true; 
     }
 });
-
-// Xử lý sự kiện nhấn đúp chuột
 document.addEventListener('click', function(event) {
     if (clickTimeout) {
-        clearTimeout(clickTimeout); // Xóa timeout trước đó
-        clickTimeout = null; // Đặt lại biến timeout
-        // Ngăn chặn sự kiện mặc định và bắt đầu nhận diện giọng nói
+        clearTimeout(clickTimeout); 
+        clickTimeout = null; 
         event.preventDefault();
         startRecognition();
     } else {
         clickTimeout = setTimeout(() => {
-            clickTimeout = null; // Đặt lại biến timeout sau 300ms
+            clickTimeout = null; 
         }, 500);
     }
 });
-
         function startRecognition() {
-            // Tạo đối tượng nhận diện giọng nói
             const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'vi-VN'; // Đặt ngôn ngữ tiếng Việt
-            recognition.continuous = false; // Ngừng nhận diện sau khi nói xong
-            recognition.interimResults = false; // Không hiển thị kết quả tạm thời
-
-            // Lấy đối tượng âm thanh
+            recognition.lang = 'vi-VN'; 
+            recognition.continuous = false; 
+            recognition.interimResults = false; 
             const beepSound = document.getElementById('beepSound');
             const customSound = document.getElementById('customSound');
             const errorSound = document.getElementById('errorSound');
             const resultDiv = document.getElementById('result');
-
-            // Bắt đầu nhận diện
             recognition.start();
-
             resultDiv.textContent = 'Đang nghe...';
-
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript;
                 resultDiv.textContent = 'Bạn đã nói: ' + transcript;
-
-                // Phát âm thanh khi nhận được giọng nói
                 beepSound.play();
-
-                // Kiểm tra và phát âm thanh tương ứng
                 if (handleCommand(transcript)) {
-                    // Phát âm thanh tùy chỉnh khi nhận diện thành công
                     customSound.play();
                 } else {
-                    // Phát âm thanh khi không nhận được lệnh phù hợp
                     errorSound.play();
                 }
             };
-
             recognition.onerror = function(event) {
                 resultDiv.textContent = 'Đã xảy ra lỗi trong quá trình nhận diện: ' + event.error;
-                errorSound.play(); // Phát âm thanh lỗi khi có lỗi trong quá trình nhận diện
+                errorSound.play(); 
             };
-
             recognition.onend = function() {
                 if (resultDiv.textContent === 'Đang nghe...') {
                     resultDiv.textContent = 'Không nhận diện được giọng nói. Hãy thử lại.';
-                    errorSound.play(); // Phát âm thanh khi không nhận được giọng nói
+                    errorSound.play(); 
                 }
             };
         }
-
-
         function handleCommand(command) {
             command = command.toLowerCase();
-            if (command.includes('thí nghiệm thành phần nguyên tử')) {
+            if (command.includes('thí nghiệm thành phần')) {
                 const youtubeURL = 'https://www.youtube.com/watch?v=IT7K1MYr_6g';
                 window.open(youtubeURL, '_blank'); // Mở video YouTube trong tab mới
                 resultDiv.textContent += ' (Đã mở video trên YouTube)';
