@@ -121,44 +121,37 @@
 
     document.addEventListener('click', function(event) {
         clickCount++;
-        
         if (clickTimeout) {
             clearTimeout(clickTimeout);
         }
-
         clickTimeout = setTimeout(() => {
             if (clickCount === 1) {
-                // Nhấn 1 lần để phát hoặc tạm dừng âm thanh
                 if (introAudio.paused) {
-                    introAudio.play(); // Phát âm thanh nếu đang dừng
+                    introAudio.play(); 
                 } else {
-                    introAudio.pause(); // Tạm dừng nếu đang phát
-                    introAudio.currentTime = 0; // Đặt lại thời gian phát
+                    introAudio.pause(); 
+                    introAudio.currentTime = 0; 
                 }
             } else if (clickCount === 2) {
-                // Nhấn 2 lần để bắt đầu thu âm
-                recognition.start(); // Bắt đầu thu âm
+                recognition.start(); 
             }
-
-            clickCount = 0; // Đặt lại đếm
-        }, 300); // Đặt thời gian chờ giữa các lần nhấn, bạn có thể điều chỉnh thời gian này
+            clickCount = 0; 
+        }, 300); 
     });
-
     recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript.toLowerCase(); // Chuyển giọng nói thành văn bản và viết thường
-        console.log(transcript); // Xem kết quả thu âm
-
+        const transcript = event.results[0][0].transcript.toLowerCase(); 
+        console.log(transcript); 
         if (transcript.includes('độ ph trong đất')) {
-            window.location.href = 'mtruongpH.html'; // Điều hướng tới trang pH trong đất
+            window.location.href = 'mtruongpH.html'; 
         }
         if (transcript.includes('sinh thiết')) {
-            window.location.href = 'chungst.html'; // Điều hướng tới trang pH trong đất
+            window.location.href = 'chungst.html'; 
         }
         if (transcript.includes('học tập')) {
-            window.location.href = 'ai.html'; // Điều hướng tới trang pH trong đất
+            window.location.href = 'ai.html'; 
         }
         if (transcript.includes('stem')) {
-            window.location.href = 'steam.html'; // Điều hướng tới trang pH trong đất
+            window.location.href = 'steam.html'; 
         }
     };
 

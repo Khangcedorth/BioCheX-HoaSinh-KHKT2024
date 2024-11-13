@@ -34,7 +34,6 @@
 </div>
 
 <script>
-    // Hiển thị ảnh từ localStorage nếu có
     window.addEventListener('load', function() {
         const savedImage = localStorage.getItem('uploadedImage');
         if (savedImage) {
@@ -47,23 +46,20 @@
     });
 
     document.getElementById('uploadForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Ngăn không cho form tải lại trang
+        event.preventDefault(); 
         const fileInput = document.getElementById('fileInput');
         const file = fileInput.files[0];
-
         if (file && file.type.startsWith('image/')) {
             const preview = document.getElementById('preview');
-            preview.innerHTML = ''; // Xóa bản xem trước cũ
-
+            preview.innerHTML = ''; 
             const img = document.createElement('img');
             img.src = URL.createObjectURL(file);
             img.style.width = '200px';
             img.onload = () => {
-                URL.revokeObjectURL(img.src); // Giải phóng bộ nhớ sau khi load ảnh
-                localStorage.setItem('uploadedImage', img.src); // Lưu ảnh vào localStorage
+                URL.revokeObjectURL(img.src); 
+                localStorage.setItem('uploadedImage', img.src); 
             };
-
-            preview.appendChild(img); // Hiển thị ảnh
+            preview.appendChild(img); 
         } else {
             alert("Vui lòng chọn một tệp hình ảnh.");
         }
