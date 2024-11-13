@@ -33,39 +33,29 @@
             recognition.lang = 'vi-VN';
             recognition.continuous = false;
             recognition.interimResults = false;
-
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript.toLowerCase();
-
                 let gender = transcript.includes('nam') ? 'Nam' : 
                              transcript.includes('nữ') ? 'Nữ' : 
                              'Không xác định';
-
                 let age = transcript.includes('trung niên') ? 'Người trung niên' : 
                           transcript.includes('người già') || transcript.includes('cao tuổi') ? 'Người già' : 
                           transcript.includes('trẻ sơ sinh') ? 'Trẻ sơ sinh' : 
                           transcript.includes('mang thai') || transcript.includes('cho con bú') ? 'Phụ nữ mang thai hoặc đang cho con bú' : 
                           'Không xác định';
-
                 let hbgMatch = transcript.match(/\d+(\.\d+)?/);
                 let hbg = hbgMatch ? parseFloat(hbgMatch[0]) : 'Không xác định';
-
                 document.getElementById('gender').value = gender;
                 document.getElementById('age').value = age;
                 document.getElementById('soHBG').value = hbg;
-
-                // Gọi hàm xử lý để kiểm tra chỉ số HBG
                 processInput();
             };
-
             function startListening() {
                 recognition.start();
             }
         }
-
         const introAudio = document.getElementById('introAudio');
         let isPlaying = false;
-
         function toggleAudio() {
             if (isPlaying) {
                 introAudio.pause();
