@@ -1,0 +1,108 @@
+/* Định nghĩa phong cách chung */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+p {
+    line-height: 1.6;
+    margin: 10px 0;
+    text-align: justify;
+}
+
+section {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Nút bấm */
+.custom-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.custom-button:hover {
+    background-color: #2980b9;
+}
+
+/* Bảng */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #3498db;
+    color: #ffffff;
+}
+
+/* Form upload */
+.upload-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.upload-section input[type="file"] {
+    margin-bottom: 10px;
+}
+
+#preview img {
+    margin-top: 10px;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Kết quả công việc */
+#result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+}
+
+#result ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+/* Điều chỉnh cho di động */
+@media (max-width: 600px) {
+    section {
+        padding: 10px;
+    }
+
+    .custom-button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Crystal.png" type="image/x-icon">
+    <title>Nuôi Tinh Thể CuSO₄</title>
+    <link rel="stylesheet" href="tinhthecu.css">
+</head>
+<body>
+    <section class="introduction">
+        <h1>Hướng Dẫn Nuôi Tinh Thể Đồng Sunfat (CuSO₄)</h1>
+        <p>Nuôi tinh thể từ đồng sunfat (CuSO₄) là một thí nghiệm khoa học thú vị. Đây là cách tuyệt vời để tìm hiểu về sự kết tinh và tạo ra các tinh thể đẹp mắt.</p>
+
+        <div class="exercise-link">
+            <a href="btcuso4.html" class="custom-button">Làm Bài Tập về Nuôi Tinh Thể</a>
+            <a href="https://www.youtube.com/watch?v=cfZ6gTTWKI0" class="custom-button">Xem Hướng Dẫn Video</a>
+        </div>
+
+        <div class="guidelines">
+            <h2>Hướng Dẫn Nuôi Tinh Thể CuSO₄</h2>
+            <p><strong>Bước 1:</strong> Chuẩn bị nguyên liệu: Đồng sunfat (CuSO₄), nước nóng, cốc thủy tinh, sợi chỉ, que tre.</p>
+            <p><strong>Bước 2:</strong> Tạo dung dịch bão hòa: Hòa tan CuSO₄ vào nước nóng cho đến khi không thể hòa tan thêm.</p>
+            <p><strong>Bước 3:</strong> Treo sợi chỉ hoặc tinh thể mồi vào dung dịch để tinh thể phát triển.</p>
+            <p><strong>Bước 4:</strong> Chờ từ vài ngày đến vài tuần để tinh thể hình thành. Đảm bảo dung dịch không bị rung lắc.</p>
+        </div>
+
+        <div class="upload-section">
+            <h2>Đăng Tải Hình Ảnh hoặc Video</h2>
+            <form id="uploadForm" action="http://localhost:3000/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" id="fileInput" name="file" accept="image/*,video/*">
+                <button type="submit" id="uploadButton" class="custom-button">Tải Lên</button>
+            </form>
+            <div id="preview"></div>
+        </div>
+
+        <script>
+            document.getElementById('uploadForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Ngăn không cho form tải lại trang
+                const fileInput = document.getElementById('fileInput');
+                const file = fileInput.files[0];
+
+                if (file && file.type.startsWith('image/')) {
+                    const preview = document.getElementById('preview');
+                    preview.innerHTML = ''; // Xóa bản xem trước cũ
+
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.style.width = '200px'; // Đặt kích thước cho ảnh
+                    img.onload = () => URL.revokeObjectURL(img.src); // Giải phóng bộ nhớ sau khi load ảnh
+
+                    preview.appendChild(img); // Hiển thị ảnh
+                } else {
+                    alert("Vui lòng chọn một tệp hình ảnh.");
+                }
+            });
+        </script>
+
+        <div class="task-section">
+            <h2>Các Công Việc Liên Quan đến Nuôi Tinh Thể</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Công Việc</th>
+                        <th>Đánh Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chuẩn bị nguyên liệu và dụng cụ</td>
+                        <td>
+                            <select class="task-result">
+                                <option value="Không Đạt">Không Đạt</option>
+                                <option value="Đạt">Đạt</option>
+                                <option value="Hoàn Thành">Hoàn Thành</option>
+                                <option value="Xuất Sắc">Xuất Sắc</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tạo dung dịch bão hòa</td>
+                        <td>
+                            <select class="task-result">
+                                <option value="Không Đạt">Không Đạt</option>
+                                <option value="Đạt">Đạt</option>
+                                <option value="Hoàn Thành">Hoàn Thành</option>
+                                <option value="Xuất Sắc">Xuất Sắc</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kiểm tra và theo dõi tinh thể phát triển</td>
+                        <td>
+                            <select class="task-result">
+                                <option value="Không Đạt">Không Đạt</option>
+                                <option value="Đạt">Đạt</option>
+                                <option value="Hoàn Thành">Hoàn Thành</option>
+                                <option value="Xuất Sắc">Xuất Sắc</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Thu hoạch và bảo quản tinh thể</td>
+                        <td>
+                            <select class="task-result">
+                                <option value="Không Đạt">Không Đạt</option>
+                                <option value="Đạt">Đạt</option>
+                                <option value="Hoàn Thành">Hoàn Thành</option>
+                                <option value="Xuất Sắc">Xuất Sắc</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button id="printButton" class="custom-button">In Kết Quả</button>
+        </div>
+        <div id="result"></div>
+    </section>
+
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            var results = document.querySelectorAll('.task-result');
+            var result = document.getElementById('result');
+            var completedTasks = [];
+            var totalScore = 0;
+            var maxScore = results.length * 3; // Maximum score based on the number of tasks
+            var scores = {
+                "Không Đạt": 0,
+                "Đạt": 1,
+                "Hoàn Thành": 2,
+                "Xuất Sắc": 3
+            };
+
+            results.forEach((select, index) => {
+                var taskResult = select.value;
+                completedTasks.push({
+                    task: select.parentElement.previousElementSibling.textContent,
+                    result: taskResult,
+                    score: scores[taskResult]
+                });
+                totalScore += scores[taskResult];
+            });
+
+            var percentageScore = (totalScore / maxScore) * 100;
+
+            result.innerHTML = '<h2>Kết Quả Công Việc</h2>';
+            if (completedTasks.length > 0) {
+                var ul = document.createElement('ul');
+                completedTasks.forEach(task => {
+                    var li = document.createElement('li');
+                    li.textContent = `${task.task}: ${task.result} (Điểm: ${task.score})`;
+                    ul.appendChild(li);
+                });
+                result.appendChild(ul);
+                result.innerHTML += `<h3>Tổng Điểm: ${totalScore} / ${maxScore} (${percentageScore.toFixed(2)}%)</h3>`;
+            } else {
+                result.innerHTML += '<p>Không có công việc nào được hoàn thành.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
