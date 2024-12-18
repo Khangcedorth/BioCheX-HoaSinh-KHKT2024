@@ -374,7 +374,7 @@ img:hover {
     recognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript.toLowerCase(); 
         console.log(transcript); 
-        if (transcript.includes('độ ph trong đất')) {
+        if (transcript.includes('độ')) {
             window.location.href = 'mtruongpH.html'; 
         }
         if (transcript.includes('sinh thiết')) {
